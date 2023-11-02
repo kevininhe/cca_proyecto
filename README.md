@@ -17,7 +17,7 @@ Se encuentran en la carpeta "Entrega2"
 1. **Entrega2.ipynb**: Notebook en el que se realizaron las tareas correspondientes a la entrega 2.
 2. **Proyecto Final - Segunda Entrega.pdf**: Documento correspondiente a la entrega 2.
 3. **data/bogota_cadastral.json**: Archivo donde se encuentra la información geográfica de Bogotá, usada en esta entrega.
-4. **data/dataset_preparado.csv**: Muestra de datos inicial proporcionada por el cliente. Se presentan los primeros 90,000 registros ya que Github tiene un límite de 25 MBs por archivo. El link del archivo completo, en caso de requerirlo, se proporcionó en la descripción de esta entrega.
+4. **data/dataset_preparado.csv**: Muestra de datos inicial proporcionada por el cliente. Se presentan los primeros 90,000 registros ya que Github tiene un límite de 25 MBs por archivo. En caso de requerirlo, podemos enviar el link del archivo con todos los registros.
 
 
 
