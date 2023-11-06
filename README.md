@@ -9,7 +9,7 @@
 En este repositorio se encuentran los archivos correspondientes al segundo y tercer sprint del proyecto final de Ciencia de Datos Aplicada.
 
 ### Objetivo del proyecto de ciencia de datos
-Evaluar la conveniencia y priorizar acciones de política pública que permitan disminuir el número de accidentes con fatalidades y/o heridos en Bogotá.
+Determinar los lugares y tiempos prioritarios de intervención para reducir la siniestralidad y orientar el tipo de acciones a llevar a cabo.
 
 ### Descripción archivos
 #### Entrega 2
