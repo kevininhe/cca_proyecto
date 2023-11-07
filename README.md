@@ -9,7 +9,7 @@
 En este repositorio se encuentran los archivos correspondientes al segundo y tercer sprint del proyecto final de Ciencia de Datos Aplicada.
 
 ### Objetivo del proyecto de ciencia de datos
-Determinar los lugares y tiempos prioritarios de intervención para reducir la siniestralidad y orientar el tipo de acciones a llevar a cabo.
+Determinar los lugares y momentos prioritarios para llevar a cabo intervenciones enfocadas en reducir la siniestralidad y orientar el tipo de acciones a desplegar allí.
 
 ### Descripción archivos
 #### Entrega 2
