@@ -4,13 +4,14 @@ import geopandas
 import shapely
 from holidays import country_holidays
 from joblib import load
+import os
 
 colombian_holidays = country_holidays("CO")
 bottomLeft = (4.45422, -74.22446)
 bottomRight = (4.45422, -73.99208494428275)
 topLeft = (4.833779672812246, -74.22446)
 topRight = (4.833779672812246, -73.99208494428275)
-mapa_bogota = geopandas.read_file("bogota_cadastral.json")
+mapa_bogota = geopandas.read_file("https://raw.githubusercontent.com/kevininhe/cca_proyecto/main/Entrega3/data/bogota_cadastral.json")
 features =[
         # "cuadrante",
         "X",
@@ -21,6 +22,8 @@ features =[
         "festivo",
         "accidentes_15_dias_misma_hora",
         "mes"]
+print("Este es un print, ojala salga")
+print([f for f in os.listdir('.')])
 model = load("models/xgb_model_v2.joblib")
 accidentes_df = pd.read_csv("data/dataset_preparado.csv.gz")
 
