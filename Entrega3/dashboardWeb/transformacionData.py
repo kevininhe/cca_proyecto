@@ -10,7 +10,7 @@ bottomLeft = (4.45422, -74.22446)
 bottomRight = (4.45422, -73.99208494428275)
 topLeft = (4.833779672812246, -74.22446)
 topRight = (4.833779672812246, -73.99208494428275)
-mapa_bogota = geopandas.read_file("./data/bogota_cadastral.json")
+mapa_bogota = geopandas.read_file("bogota_cadastral.json")
 features =[
         # "cuadrante",
         "X",
