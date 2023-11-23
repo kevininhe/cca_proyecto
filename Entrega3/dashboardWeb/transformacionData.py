@@ -22,9 +22,8 @@ features =[
         "festivo",
         "accidentes_15_dias_misma_hora",
         "mes"]
-print("Este es un print, ojala salga")
-print([f for f in os.listdir('.')])
-model = load("models/xgb_model_v2.joblib")
+
+model = load("./models/xgb_model_v2.joblib")
 accidentes_df = pd.read_csv("data/dataset_preparado.csv.gz")
 
 def asignarCuadrantes(accidentes_df,ncols,nrows):

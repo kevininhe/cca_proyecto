@@ -4,10 +4,18 @@ import folium
 from streamlit_folium import st_folium
 import transformacionData
 import datetime
+import logging
+import os
 
 LOGGER = get_logger(__name__)
 ncols = 6
 nrows = 10
+
+LOGGER.addHandler(logging.StreamHandler())
+LOGGER.setLevel(logging.INFO)
+LOGGER.info("Este es un print, ojala salga")
+LOGGER.info([f for f in os.listdir('.')])
+print("Print 2")
 
 @st.cache_data
 def getCuadrantes(fecha):
