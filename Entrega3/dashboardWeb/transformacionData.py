@@ -23,7 +23,7 @@ features =[
         "accidentes_15_dias_misma_hora",
         "mes"]
 
-model = load("./models/xgb_model_v2.joblib")
+model = load("models/xgb_model_v2.joblib")
 accidentes_df = pd.read_csv("data/dataset_preparado.csv.gz")
 
 def asignarCuadrantes(accidentes_df,ncols,nrows):
