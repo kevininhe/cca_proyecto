@@ -1,2 +1,4 @@
-Entrega2/.ipynb_checkpoints/
-Entrega2/logs.log
+**/.ipynb_checkpoints/
+**/logs.log
+**/venv/
+**/.venv/
