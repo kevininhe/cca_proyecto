@@ -3,3 +3,8 @@ Entrega2/logs.log
 **/.DS_Store
 **/__pycache__/
 **/env/
+**/.ipynb_checkpoints/
+**/logs.log
+**/venv/
+**/.venv/
+**/logs/
