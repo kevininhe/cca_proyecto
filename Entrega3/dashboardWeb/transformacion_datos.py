@@ -7,7 +7,7 @@ import streamlit
 from holidays import country_holidays
 
 
-MAP_PATH = "https://raw.githubusercontent.com/kevininhe/cca_proyecto/main/Entrega3/data/bogota_cadastral.json"
+MAP_PATH = "Entrega3/dashboardWeb/data/bogota_catastral.json"
 
 
 def asignar_cuadrante(df, cols=13, rows=21):
@@ -191,7 +191,7 @@ def crear_dataset(cols=13, rows=21, lapso="4h"):
 
 @streamlit.cache_resource
 def load_model(ncols, nrows):
-    return joblib.load(f"models/model_{ncols}x{nrows}.joblib")
+    return joblib.load(f"Entrega3/dashboardWeb/models/model_{ncols}x{nrows}.joblib")
 
 
 @streamlit.cache_data

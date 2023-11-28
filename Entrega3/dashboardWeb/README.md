@@ -1,4 +1,12 @@
 # Dashboard
 
+## Instrucciones para la ejecución:
 
-streamlit run main.py 
+Instalar dependencias:
+
+- `pip install -r requirements.txt`
+
+Ejecutar la app:
+
+- `streamlit run main.py`
+
