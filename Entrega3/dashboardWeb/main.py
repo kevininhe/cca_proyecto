@@ -1,25 +1,12 @@
+import datetime
+
+import pandas as pd
 import streamlit as st
-from streamlit.logger import get_logger
 import folium
 from streamlit_folium import st_folium
-import transformacionData
-import datetime
-import logging
-import os
 
-LOGGER = get_logger(__name__)
-ncols = 6
-nrows = 10
+from transformacion_datos import crear_dataset, predict
 
-LOGGER.addHandler(logging.StreamHandler())
-LOGGER.setLevel(logging.INFO)
-LOGGER.info("Este es un print, ojala salga")
-LOGGER.info([f for f in os.listdir('.')])
-print("Print 2")
-
-@st.cache_data
-def getCuadrantes(fecha):
-    return transformacionData.obtenerCuadrantesDef(fecha,ncols,nrows)
 
 def run():
     st.set_page_config(
@@ -27,43 +14,67 @@ def run():
         page_icon="🗺️",
     )
 
-    st.write("# **Política pública para la reducción de accidentes viales en Bogotá**")
-
-    st.markdown(
+    st.sidebar.subheader("GSD+ & SDM Bogotá")
+    st.sidebar.markdown(
         """
-        ### GSD+ & SDM Bogotá
-
-        Mediante este dashboard, se podrán determinar los lugares y momentos prioritarios para llevar a cabo intervenciones enfocadas en reducir la siniestralidad y orientar el tipo de acciones a desplegar allí.
-        """
+        Mediante este dashboard usted podrá determinar los lugares y momentos prioritarios para llevar a cabo
+        intervenciones enfocadas en reducir la siniestralidad y orientar el tipo de acciones a desplegar allí."""
     )
 
-    m = folium.Map(location=[4.6163, -74.103], zoom_start=11, tiles="CartoDB positron")
-    fecha_s = st.date_input("Fecha de predicción", datetime.date(2022, 1, 1),key='date_picker')
-    hora_s = st.time_input('Hora prediccion', datetime.time(4, 0),step=14400)
+    mallas_disponibles = [f"{cols}x{2*cols}" for cols in range(1, 16)]
+    tamaño = st.sidebar.selectbox("Tamaño de la malla", mallas_disponibles, index=5)
+
+    ncols, nrows = map(int, tamaño.split("x"))
+
+    df, fecha_corte, grilla = crear_dataset(cols=ncols, rows=nrows)
+    df["proba"] = predict(df, nrows=nrows, ncols=ncols)
+
+    fecha_s = st.sidebar.date_input(
+        "Fecha de predicción",
+        df["fecha_y_hora"].min() + pd.DateOffset(days=1),
+        min_value=df["fecha_y_hora"].min(),
+        max_value=df["fecha_y_hora"].max(),
+    )
+
+    hora_s = st.sidebar.time_input(
+        "Hora predicción", datetime.time(4, 0), step=datetime.timedelta(hours=4)
+    )
     fecha = datetime.datetime.combine(fecha_s, hora_s)
+    df = df[df["fecha_y_hora"] == fecha]
 
-    cuadrantes_def = getCuadrantes(fecha)
-    geo_j = cuadrantes_def[["geometry","id_cuadrante"]].to_json()
+    st.header("Reducción de accidentes viales en Bogotá D.C.")
+
+    mapa = folium.Map(
+        location=[4.6163, -74.103], zoom_start=11, tiles="CartoDB positron"
+    )
+
     cp = folium.Choropleth(
-    geo_data=geo_j,
-    name="choropleth",
-    data=cuadrantes_def[["id_cuadrante","proba"]],
-    columns=["id_cuadrante", "proba"],
-    key_on="feature.properties.id_cuadrante",
-    fill_color="YlGn",
-    fill_opacity=0.7,
-    line_opacity=0.2,
-    legend_name="Probabilidades de accidentes",
-    ).add_to(m)
+        geo_data=grilla.to_json(),
+        name="choropleth",
+        data=df[["cuadrante", "proba"]],
+        columns=["cuadrante", "proba"],
+        key_on="feature.properties.cuadrante",
+        fill_color="YlOrRd",
+        fill_opacity=0.7,
+        line_opacity=0.0,
+        legend_name="Probabilidades de accidentes",
+        nan_fill_color="none",
+    ).add_to(mapa)
 
-    for s in cp.geojson.data['features']:
-        proba = cuadrantes_def.loc[cuadrantes_def["id_cuadrante"] == s['properties']["id_cuadrante"]]["proba"].values[0]
-        s['properties']['proba'] = format((proba*100),'.4f')
+    probas = df.set_index("cuadrante")["proba"].to_dict()
+    for s in cp.geojson.data["features"]:
+        s["properties"]["proba"] = format(
+            probas.get(s["properties"]["cuadrante"], 0), "0.2f"
+        )
 
-    folium.GeoJsonTooltip(["id_cuadrante","proba"]).add_to(cp.geojson)
-    folium.LayerControl().add_to(m)
+    folium.GeoJsonTooltip(
+        ["cuadrante", "proba"], ["Cuadrante ⁣ ⁣", "Probabilidad ⁣ ⁣"]
+    ).add_to(cp.geojson)
 
-    st_data = st_folium(m, width=500)
+    folium.LayerControl().add_to(mapa)
+
+    st_folium(mapa, width=600)
+
 
 if __name__ == "__main__":
     run()
