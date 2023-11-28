@@ -88,7 +88,9 @@ def crear_dataset(cols=13, rows=21, lapso="4h"):
     Crea un dataset de una grilla espacio temporal y marca cada cuadrante según el número de accidentes ocurridos
     """
 
-    df = pd.read_csv("data/dataset_preparado.csv.gz", low_memory=False)
+    df = pd.read_csv(
+        "Entrega3/dashboardWeb/data/dataset_preparado.csv.gz", low_memory=False
+    )
 
     # Asignamos los cuadrantes
     df, grid = asignar_cuadrante(df, cols, rows)
@@ -96,6 +98,11 @@ def crear_dataset(cols=13, rows=21, lapso="4h"):
     fecha_y_hora = pd.to_datetime(
         df["FECHA_OCURRENCIA_ACC"].str[:11] + df["HORA_OCURRENCIA_ACC"].str[:2]
     )
+
+    df = df[fecha_y_hora > fecha_y_hora.max() - pd.DateOffset(days=30)]
+    fecha_y_hora = fecha_y_hora[
+        fecha_y_hora > fecha_y_hora.max() - pd.DateOffset(days=30)
+    ]
 
     fecha_corte = fecha_y_hora.max()
 
