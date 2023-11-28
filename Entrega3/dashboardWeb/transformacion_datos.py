@@ -7,7 +7,11 @@ import streamlit
 from holidays import country_holidays
 
 
-MAP_PATH = "Entrega3/dashboardWeb/data/bogota_catastral.json"
+@streamlit.cache_data
+def get_bogota():
+    return gpd.read_file("Entrega3/dashboardWeb/data/bogota_catastral.json").cx[
+        :, 4.45422:
+    ]
 
 
 def asignar_cuadrante(df, cols=13, rows=21):
@@ -15,7 +19,7 @@ def asignar_cuadrante(df, cols=13, rows=21):
     Asigna a cada punto un cuadrante dado el tamaño de maya definida por cols y rows
     """
 
-    mapa_bogota_no_sumapaz = gpd.read_file(MAP_PATH).cx[:, 4.45422:]
+    mapa_bogota_no_sumapaz = get_bogota()
 
     bottomLeft = (4.45422, -74.22446)
     bottomRight = (4.45422, -73.99208494428275)
@@ -92,19 +96,21 @@ def crear_dataset(cols=13, rows=21, lapso="4h"):
         "Entrega3/dashboardWeb/data/dataset_preparado.csv.gz", low_memory=False
     )
 
-    # Asignamos los cuadrantes
-    df, grid = asignar_cuadrante(df, cols, rows)
-
+    # Convertimos las fechas
     fecha_y_hora = pd.to_datetime(
         df["FECHA_OCURRENCIA_ACC"].str[:11] + df["HORA_OCURRENCIA_ACC"].str[:2]
     )
 
-    df = df[fecha_y_hora > fecha_y_hora.max() - pd.DateOffset(days=30)]
+    # Filtramos datos viejos para reducir el tiempo de ejecución
+    df = df[fecha_y_hora >= fecha_y_hora.max() - pd.DateOffset(days=40)]
     fecha_y_hora = fecha_y_hora[
-        fecha_y_hora > fecha_y_hora.max() - pd.DateOffset(days=30)
+        fecha_y_hora >= fecha_y_hora.max() - pd.DateOffset(days=40)
     ]
 
     fecha_corte = fecha_y_hora.max()
+
+    # Asignamos los cuadrantes
+    df, grid = asignar_cuadrante(df, cols, rows)
 
     # Creamos el índice de fechas agregando 7 días más para la predicción
     fechas = pd.DataFrame(
