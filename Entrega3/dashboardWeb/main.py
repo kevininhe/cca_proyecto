@@ -1,5 +1,4 @@
 import datetime
-import locale
 
 import folium
 import matplotlib.pyplot as plt
@@ -8,8 +7,6 @@ import streamlit as st
 from streamlit_folium import st_folium
 
 from transformacion_datos import crear_dataset, predict, get_bogota
-
-locale.setlocale(locale.LC_ALL, "es_CO.utf-8")
 
 
 def generar_mapa(df, grilla, fecha, hora):
