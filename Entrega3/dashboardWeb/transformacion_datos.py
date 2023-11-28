@@ -7,12 +7,15 @@ import streamlit
 from holidays import country_holidays
 
 
+MAP_PATH = "https://raw.githubusercontent.com/kevininhe/cca_proyecto/main/Entrega3/data/bogota_cadastral.json"
+
+
 def asignar_cuadrante(df, cols=13, rows=21):
     """
     Asigna a cada punto un cuadrante dado el tamaño de maya definida por cols y rows
     """
 
-    mapa_bogota_no_sumapaz = gpd.read_file("data/bogota_catastral.json").cx[:, 4.45422:]
+    mapa_bogota_no_sumapaz = gpd.read_file(MAP_PATH).cx[:, 4.45422:]
 
     bottomLeft = (4.45422, -74.22446)
     bottomRight = (4.45422, -73.99208494428275)
