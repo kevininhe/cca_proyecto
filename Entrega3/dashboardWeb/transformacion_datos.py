@@ -6,22 +6,6 @@ import shapely
 import streamlit
 from holidays import country_holidays
 
-CARACTERÍSTICAS = [
-    "cuadrante",
-    "fila",
-    "hora",
-    "semana_del_año",
-    "dia_de_la_semana",
-    "mes",
-    "accidente_14_dias_media_móvil",
-    "accidente_21_dias_media_móvil",
-    "accidente_28_dias_media_móvil",
-    "accidentes_8_media_móvil_día",
-    "accidentes_14_media_móvil_día",
-    "accidentes_21_media_móvil_día",
-    "accidentes_28_media_móvil_día",
-]
-
 
 def asignar_cuadrante(df, cols=13, rows=21):
     """
