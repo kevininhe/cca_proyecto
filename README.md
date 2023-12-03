@@ -23,11 +23,11 @@ Se encuentran en la carpeta "Entrega2"
 
 
 #### Entrega 3
-Se encuentran en la carpeta "Entrega2"
+Se encuentran en la carpeta "Entrega3"
 1. **Entrega3/Exploración y entrenamiento.ipynb**: Notebook en el que se realizaron las tareas correspondientes al entrenamiento, validación y prueba del los modelos.
 2. **Entrega3/dashboardWeb**: Contiene el código de la aplicación para usar los modelos, la cual se encuentra desplegada en https://dashboardmovilidad.streamlit.app/.
 3. **Entrega3/data**: Contiene los conjuntos de datos utilizados.
-4. **Entrega3/models**: Contiene los modelos entrenados para diferentes tamaños de grill.
+4. **Entrega3/models**: Contiene los modelos entrenados para diferentes tamaños de grilla.
 
 
 
